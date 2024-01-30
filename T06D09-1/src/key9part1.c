@@ -52,4 +52,5 @@ int find_numbers(const int *buffer, int length, int number, int *numbers) {
             number++;
         }
     }
+    return 1;
 }
