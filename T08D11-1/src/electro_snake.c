@@ -16,17 +16,15 @@ void sort_horizontal(int **matrix, int n, int m, int **result_matrix);
 void input(int **matrix, int *n, int *m);
 void output(int **matrix, int n, int m);
 
+int main() {
+  int **matrix, **result;
+  int n, m;
 
-void main()
-{
-    int **matrix, **result;
-    int n,m;
+  input(matrix);
 
-    input(matrix);
-    
-    sort_vertical(matrix, n, m, result);
-    output(result);
-    
-    sort_horizontal(matrix, n, m, result);
-    output(result);
+  sort_vertical(matrix, n, m, result);
+  output(result);
+
+  sort_horizontal(matrix, n, m, result);
+  output(result);
 }
