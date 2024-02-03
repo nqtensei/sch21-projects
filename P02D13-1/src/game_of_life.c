@@ -26,12 +26,6 @@ int main() {
 int create_random_matrix(int (*matrix)[XMAX]) {
     for (int i = 0; i < YMAX; i++) {
         for (int j = 0; j < XMAX; j++) {
-            /*if (i == 10 && (j == 39 || j == 40 || j == 41)) {
-                matrix[i][j] = 1;
-            } else {
-                matrix[i][j] = 0;
-            }*/
-
             matrix[i][j] = rand() % 2;
         }
     }
@@ -42,7 +36,57 @@ int logic(int (*current_matrix)[XMAX]) {
     for (int i = 0; i < YMAX; i++) {
         for (int j = 0; j < XMAX; j++) {
             int neigh = 0;
-            if ((i > 0 && i < 24) && (j > 0 && j < 79)) {  // если "сканируемая" клетка не на границе
+            if (i == 0 && j == 0) {
+                if (current_matrix[24][79] == 1) neigh++;
+                if (current_matrix[24][j] == 1) neigh++;
+                if (current_matrix[24][j + 1] == 1) neigh++;
+                if (current_matrix[i][79] == 1) neigh++;
+                if (current_matrix[i][j + 1] == 1) neigh++;
+                if (current_matrix[i + 1][79] == 1) neigh++;
+                if (current_matrix[i + 1][j] == 1) neigh++;
+                if (current_matrix[i + 1][j + 1] == 1) neigh++;
+            }
+            if (i == 0 && (j > 0 && j < 79)) {
+                if (current_matrix[24][j - 1] == 1) neigh++;
+                if (current_matrix[24][j] == 1) neigh++;
+                if (current_matrix[24][j + 1] == 1) neigh++;
+                if (current_matrix[i][j - 1] == 1) neigh++;
+                if (current_matrix[i][j + 1] == 1) neigh++;
+                if (current_matrix[i + 1][j - 1] == 1) neigh++;
+                if (current_matrix[i + 1][j] == 1) neigh++;
+                if (current_matrix[i + 1][j + 1] == 1) neigh++;
+            }
+            if (i == 0 && j == 79) {
+                if (current_matrix[24][j - 1] == 1) neigh++;
+                if (current_matrix[24][j] == 1) neigh++;
+                if (current_matrix[24][0] == 1) neigh++;
+                if (current_matrix[i][j - 1] == 1) neigh++;
+                if (current_matrix[i][0] == 1) neigh++;
+                if (current_matrix[i + 1][j - 1] == 1) neigh++;
+                if (current_matrix[i + 1][j] == 1) neigh++;
+                if (current_matrix[i + 1][0] == 1) neigh++;
+            }
+            if (j == 0 && (i > 0 && i < 24)) {
+                if (current_matrix[i - 1][79] == 1) neigh++;
+                if (current_matrix[i - 1][j] == 1) neigh++;
+                if (current_matrix[i - 1][j + 1] == 1) neigh++;
+                if (current_matrix[i][79] == 1) neigh++;
+                if (current_matrix[i][j + 1] == 1) neigh++;
+                if (current_matrix[i + 1][79] == 1) neigh++;
+                if (current_matrix[i + 1][j] == 1) neigh++;
+                if (current_matrix[i + 1][j + 1] == 1) neigh++;
+            }
+            if (j == 79 && (i > 0 && i < 24)) {
+                if (current_matrix[i - 1][j - 1] == 1) neigh++;
+                if (current_matrix[i - 1][j] == 1) neigh++;
+                if (current_matrix[i - 1][0] == 1) neigh++;
+                if (current_matrix[i][j - 1] == 1) neigh++;
+                if (current_matrix[i][0] == 1) neigh++;
+                if (current_matrix[i + 1][j - 1] == 1) neigh++;
+                if (current_matrix[i + 1][j] == 1) neigh++;
+                if (current_matrix[i + 1][0] == 1) neigh++;
+            }
+            if ((i > 0 && i < 24) && (j > 0 && j < 79)) {
                 if (current_matrix[i - 1][j - 1] == 1) neigh++;
                 if (current_matrix[i - 1][j] == 1) neigh++;
                 if (current_matrix[i - 1][j + 1] == 1) neigh++;
@@ -51,34 +95,40 @@ int logic(int (*current_matrix)[XMAX]) {
                 if (current_matrix[i + 1][j - 1] == 1) neigh++;
                 if (current_matrix[i + 1][j] == 1) neigh++;
                 if (current_matrix[i + 1][j + 1] == 1) neigh++;
-                if (neigh < 2 || neigh > 3) future_matrix[i][j] = 0;
-                if (current_matrix[i][j] == 1 && (neigh == 2 || neigh == 3)) future_matrix[i][j] = 1;
-                if (current_matrix[i][j] == 0 && neigh == 3) future_matrix[i][j] = 1;
-            }
-            if (i == 0 && (j > 0 && j < 79)) {
-                // условия для клеток на верхней границы
             }
             if (i == 24 && (j > 0 && j < 79)) {
-                // условия для клеток на нижней границе
-            }
-            if (j == 0 && (i > 0 && i < 24)) {
-                // условия для клеток на левой границе
-            }
-            if (j == 79 && (i > 0 && i < 24)) {
-                // условия для клеток на правой границе
-            }
-            if (i == 0 && j == 0) {
-                // условия для верхнего левого угла
-            }
-            if (i == 0 && j == 79) {
-                // условия для верхнего правого угла
+                if (current_matrix[i - 1][j - 1] == 1) neigh++;
+                if (current_matrix[i - 1][j] == 1) neigh++;
+                if (current_matrix[i - 1][j + 1] == 1) neigh++;
+                if (current_matrix[i][j - 1] == 1) neigh++;
+                if (current_matrix[i][j + 1] == 1) neigh++;
+                if (current_matrix[0][j - 1] == 1) neigh++;
+                if (current_matrix[0][j] == 1) neigh++;
+                if (current_matrix[0][j + 1] == 1) neigh++;
             }
             if (i == 24 && j == 0) {
-                // условия дл янижнего левого угла
+                if (current_matrix[i - 1][79] == 1) neigh++;
+                if (current_matrix[i - 1][j] == 1) neigh++;
+                if (current_matrix[i - 1][j + 1] == 1) neigh++;
+                if (current_matrix[i][79] == 1) neigh++;
+                if (current_matrix[i][j + 1] == 1) neigh++;
+                if (current_matrix[0][79] == 1) neigh++;
+                if (current_matrix[0][j] == 1) neigh++;
+                if (current_matrix[0][j + 1] == 1) neigh++;
             }
             if (i == 24 && j == 79) {
-                // условия для нижнего правого угла
+                if (current_matrix[i - 1][j - 1] == 1) neigh++;
+                if (current_matrix[i - 1][j] == 1) neigh++;
+                if (current_matrix[i - 1][0] == 1) neigh++;
+                if (current_matrix[i][j - 1] == 1) neigh++;
+                if (current_matrix[i][0] == 1) neigh++;
+                if (current_matrix[0][j - 1] == 1) neigh++;
+                if (current_matrix[0][j] == 1) neigh++;
+                if (current_matrix[0][0] == 1) neigh++;
             }
+            if (neigh < 2 || neigh > 3) future_matrix[i][j] = 0;
+            if (current_matrix[i][j] == 1 && (neigh == 2 || neigh == 3)) future_matrix[i][j] = 1;
+            if (current_matrix[i][j] == 0 && neigh == 3) future_matrix[i][j] = 1;
         }
     }
     for (int i = 0; i < YMAX; i++) {
@@ -97,20 +147,20 @@ void output(int (*matrix)[XMAX]) {
                 if (matrix[i][j] == 0)
                     printf(" ");
                 else
-                    printf("0");
+                    printf("O");
             }
             if ((j == 79) && (i < YMAX - 1)) {
                 if (matrix[i][j] == 0) {
                     printf(" \n");
                 } else {
-                    printf("0\n");
+                    printf("O\n");
                 }
             }
             if ((j == XMAX - 1) && (i == YMAX - 1)) {
                 if (matrix[i][j] == 0)
                     printf(" ");
                 else
-                    printf("0");
+                    printf("O");
             }
         }
     }
