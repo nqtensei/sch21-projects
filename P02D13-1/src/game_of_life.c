@@ -24,23 +24,25 @@ int main() {
     }
 }
 int create_random_matrix(int (*matrix)[XMAX]) {
-    int a;
     for (int i = 0; i < YMAX; i++) {
         for (int j = 0; j < XMAX; j++) {
-            int a = rand() % 2;
-            matrix[i][j] = a;
+            /*if (i == 10 && (j == 39 || j == 40 || j == 41)) {
+                matrix[i][j] = 1;
+            } else {
+                matrix[i][j] = 0;
+            }*/
+
+            matrix[i][j] = rand() % 2;
         }
     }
     return **matrix;
 }
 int logic(int (*current_matrix)[XMAX]) {
     int future_matrix[YMAX][XMAX];
-    int buf;
-    int neigh = 0;
     for (int i = 0; i < YMAX; i++) {
         for (int j = 0; j < XMAX; j++) {
-            buf = current_matrix[i][j];
-            if (i > 0 && i < 24 && j > 0 && j < 79) {  // если "сканируемая" клетка не на границе
+            int neigh = 0;
+            if ((i > 0 && i < 24) && (j > 0 && j < 79)) {  // если "сканируемая" клетка не на границе
                 if (current_matrix[i - 1][j - 1] == 1) neigh++;
                 if (current_matrix[i - 1][j] == 1) neigh++;
                 if (current_matrix[i - 1][j + 1] == 1) neigh++;
@@ -49,23 +51,34 @@ int logic(int (*current_matrix)[XMAX]) {
                 if (current_matrix[i + 1][j - 1] == 1) neigh++;
                 if (current_matrix[i + 1][j] == 1) neigh++;
                 if (current_matrix[i + 1][j + 1] == 1) neigh++;
-                if (neigh < 2 || neigh > 3) buf = 0;
-                if (buf == 1 && (neigh == 2 || neigh == 3)) buf = 1;
-                if (buf == 0 && neigh == 3) buf = 1;
+                if (neigh < 2 || neigh > 3) future_matrix[i][j] = 0;
+                if (current_matrix[i][j] == 1 && (neigh == 2 || neigh == 3)) future_matrix[i][j] = 1;
+                if (current_matrix[i][j] == 0 && neigh == 3) future_matrix[i][j] = 1;
             }
-            if (i == 0 && j > 0 && j < 79) {
+            if (i == 0 && (j > 0 && j < 79)) {
                 // условия для клеток на верхней границы
             }
-            if (i == 24 && j > 0 && j < 79) {
+            if (i == 24 && (j > 0 && j < 79)) {
                 // условия для клеток на нижней границе
             }
-            if (j == 0 && i > 0 && i < 24) {
+            if (j == 0 && (i > 0 && i < 24)) {
                 // условия для клеток на левой границе
             }
-            if (j == 79 && i > 0 && i < 24) {
+            if (j == 79 && (i > 0 && i < 24)) {
                 // условия для клеток на правой границе
             }
-            future_matrix[i][j] = buf;
+            if (i == 0 && j == 0) {
+                // условия для верхнего левого угла
+            }
+            if (i == 0 && j == 79) {
+                // условия для верхнего правого угла
+            }
+            if (i == 24 && j == 0) {
+                // условия дл янижнего левого угла
+            }
+            if (i == 24 && j == 79) {
+                // условия для нижнего правого угла
+            }
         }
     }
     for (int i = 0; i < YMAX; i++) {
@@ -77,36 +90,29 @@ int logic(int (*current_matrix)[XMAX]) {
 }
 void output(int (*matrix)[XMAX]) {
     printf("\n");
+    system("clear");
     for (int i = 0; i < YMAX; i++) {
         for (int j = 0; j < XMAX; j++) {
             if ((j < XMAX - 1) && (i < YMAX)) {
                 if (matrix[i][j] == 0)
                     printf(" ");
                 else
-                    printf("*");
-            }
-            if ((j == 79) && (i == 0)) {
-                if (matrix[i][j] == 0) {
-                    printf(" \n");
-                } else {
-                    printf("*\n");
-                }
+                    printf("0");
             }
             if ((j == 79) && (i < YMAX - 1)) {
                 if (matrix[i][j] == 0) {
                     printf(" \n");
                 } else {
-                    printf("*\n");
+                    printf("0\n");
                 }
             }
             if ((j == XMAX - 1) && (i == YMAX - 1)) {
                 if (matrix[i][j] == 0)
                     printf(" ");
                 else
-                    printf("*");
+                    printf("0");
             }
         }
     }
     sleep(1);
-    system("clear");
 }
