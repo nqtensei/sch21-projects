@@ -66,7 +66,7 @@ int logic(int (*current_matrix)[XMAX]) {
                 if (current_matrix[i + 1][j] == 1) neigh++;
                 if (current_matrix[i + 1][0] == 1) neigh++;
             }
-            if (j == 0 && (i > 0 && i < 24)) {
+            if ((i > 0 && i < 24) && j == 0) {
                 if (current_matrix[i - 1][79] == 1) neigh++;
                 if (current_matrix[i - 1][j] == 1) neigh++;
                 if (current_matrix[i - 1][j + 1] == 1) neigh++;
@@ -75,16 +75,6 @@ int logic(int (*current_matrix)[XMAX]) {
                 if (current_matrix[i + 1][79] == 1) neigh++;
                 if (current_matrix[i + 1][j] == 1) neigh++;
                 if (current_matrix[i + 1][j + 1] == 1) neigh++;
-            }
-            if (j == 79 && (i > 0 && i < 24)) {
-                if (current_matrix[i - 1][j - 1] == 1) neigh++;
-                if (current_matrix[i - 1][j] == 1) neigh++;
-                if (current_matrix[i - 1][0] == 1) neigh++;
-                if (current_matrix[i][j - 1] == 1) neigh++;
-                if (current_matrix[i][0] == 1) neigh++;
-                if (current_matrix[i + 1][j - 1] == 1) neigh++;
-                if (current_matrix[i + 1][j] == 1) neigh++;
-                if (current_matrix[i + 1][0] == 1) neigh++;
             }
             if ((i > 0 && i < 24) && (j > 0 && j < 79)) {
                 if (current_matrix[i - 1][j - 1] == 1) neigh++;
@@ -96,15 +86,15 @@ int logic(int (*current_matrix)[XMAX]) {
                 if (current_matrix[i + 1][j] == 1) neigh++;
                 if (current_matrix[i + 1][j + 1] == 1) neigh++;
             }
-            if (i == 24 && (j > 0 && j < 79)) {
+            if ((i > 0 && i < 24) && j == 79) {
                 if (current_matrix[i - 1][j - 1] == 1) neigh++;
                 if (current_matrix[i - 1][j] == 1) neigh++;
-                if (current_matrix[i - 1][j + 1] == 1) neigh++;
+                if (current_matrix[i - 1][0] == 1) neigh++;
                 if (current_matrix[i][j - 1] == 1) neigh++;
-                if (current_matrix[i][j + 1] == 1) neigh++;
-                if (current_matrix[0][j - 1] == 1) neigh++;
-                if (current_matrix[0][j] == 1) neigh++;
-                if (current_matrix[0][j + 1] == 1) neigh++;
+                if (current_matrix[i][0] == 1) neigh++;
+                if (current_matrix[i + 1][j - 1] == 1) neigh++;
+                if (current_matrix[i + 1][j] == 1) neigh++;
+                if (current_matrix[i + 1][0] == 1) neigh++;
             }
             if (i == 24 && j == 0) {
                 if (current_matrix[i - 1][79] == 1) neigh++;
@@ -113,6 +103,16 @@ int logic(int (*current_matrix)[XMAX]) {
                 if (current_matrix[i][79] == 1) neigh++;
                 if (current_matrix[i][j + 1] == 1) neigh++;
                 if (current_matrix[0][79] == 1) neigh++;
+                if (current_matrix[0][j] == 1) neigh++;
+                if (current_matrix[0][j + 1] == 1) neigh++;
+            }
+            if (i == 24 && (j > 0 && j < 79)) {
+                if (current_matrix[i - 1][j - 1] == 1) neigh++;
+                if (current_matrix[i - 1][j] == 1) neigh++;
+                if (current_matrix[i - 1][j + 1] == 1) neigh++;
+                if (current_matrix[i][j - 1] == 1) neigh++;
+                if (current_matrix[i][j + 1] == 1) neigh++;
+                if (current_matrix[0][j - 1] == 1) neigh++;
                 if (current_matrix[0][j] == 1) neigh++;
                 if (current_matrix[0][j + 1] == 1) neigh++;
             }
